@@ -1,0 +1,6 @@
+connection:
+  adapter: sqlserver
+  dataserver: *********
+  database: *********
+  username: '*********'
+  password: '*********'
