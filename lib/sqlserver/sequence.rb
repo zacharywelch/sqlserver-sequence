@@ -37,7 +37,7 @@ module Sqlserver
           prefix = options[:prefix]
           format = options[:format]
 
-          value = next_sequence_value(name)
+          value = next_sequence_value(name).to_s
           value = format.call(value) if format.respond_to?(:call)
           send "#{field}=", [prefix, value].join
         end

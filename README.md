@@ -55,7 +55,7 @@ end
 
 ###### name
 
-By default `sqlserver-sequence` will look for a row in `sys.sequences` with the same `name` as the attribute. You can use the `name` option if the sequence is named differently.
+By default `sqlserver-sequence` will look for a row in `sys.sequences` with the same `sequence_name` as the attribute. You can use the `name` option if the sequence is named differently.
 
 ```ruby
 class Supplier < ActiveRecord::Base
@@ -81,16 +81,17 @@ end
 
 ###### format
 
-Pass a lambda to the `format` option if you need more control over the assigned sequence value.
+Pass a lambda to the `format` option if you need more control over the assigned sequence value, for example to assign a fixed length string.
 
 ```ruby
 class Supplier < ActiveRecord::Base
-  sequence :number, format: lambda { |num| num.rjust(10, 0) }
+  sequence :number, prefix: 'S-',
+                    format: lambda { |num| num.rjust(10, 0) }
 end
 ```
     $ supplier = Supplier.create
     $ supplier.number
-    > 0000000010
+    > S-0000000010
 
 ## Testing with SQLite
 

@@ -91,7 +91,7 @@ describe Sqlserver::Sequence do
     before do 
       allow_any_instance_of(Supplier).to receive(:next_sequence_value).
                                       with('sequence').
-                                      and_return('1234567')
+                                      and_return(1234567)
     end
 
     subject(:supplier) { Supplier.create }
