@@ -99,7 +99,7 @@ If your test suite uses SQLite you'll need to turn off sequence generation or pr
 
 ```ruby
 before do
-  allow_any_instance_of(Supplier).to receive(:next_sequence_value).and_return('10')
+  allow_any_instance_of(Supplier).to receive(:next_sequence_value).and_return(10)
 end
 ```
 
