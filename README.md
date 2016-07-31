@@ -93,13 +93,44 @@ end
     $ supplier.number
     > S-0000000010
 
-## Testing with SQLite
 
-If your test suite uses SQLite you'll need to turn off sequence generation or provide a stub for `next_sequence_value`.
+## Configuration
+
+Override any of these defaults in `config/initializers/sqlserver_sequence.rb`:
 
 ```ruby
-before do
-  allow_any_instance_of(Supplier).to receive(:next_sequence_value).and_return(10)
+Sqlserver::Sequence.configure do |config|
+  config.next_value_strategy = Sqlserver::Sequence::Strategies::NextValueFor
+end
+```
+
+### next_value_strategy
+
+By default `Sqlserver::Sequence` will use a strategy that implements SQL Server's [NEXT VALUE FOR](https://msdn.microsoft.com/en-us/library/ff878370.aspx) function.
+
+To change how sequences are generated you can also assign your own strategy:
+
+```ruby
+# lib/size_strategy.rb
+module SizeStrategy
+  def next_sequence_value(sequence_name)
+    self.class.size
+  end
+end
+
+# config/initializers/sqlserver_sequence.rb
+Sqlserver::Sequence.configure do |config|
+  config.next_value_strategy = SizeStrategy
+end
+```
+
+### Development and Testing without SQL Server
+
+If your test or development environment uses something other than SQL Server (e.g. SQLite) a `Simple` strategy is provided to avoid errors.
+
+```ruby
+Sqlserver::Sequence.configure do |config|
+  config.next_value_strategy = Sqlserver::Sequence::Strategies::Simple
 end
 ```
 

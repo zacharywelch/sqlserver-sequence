@@ -1,15 +1,12 @@
 require 'spec_helper'
 
-class Supplier < ActiveRecord::Base; end
-
 describe Sqlserver::Sequence do
   
-  after(:each) { Supplier.sequences = {} }
+  before { spawn_model :Supplier }
   
   describe '.sequences' do
 
     context 'single sequence' do
-
       before do
         Supplier.sequence :number, name: 'sequence', prefix: 'N'
       end
@@ -28,7 +25,6 @@ describe Sqlserver::Sequence do
     end
 
     context 'multiple sequences' do
-
       before do
         Supplier.sequence :number1, name: 'sequence1', prefix: 'N'
         Supplier.sequence :number2, name: 'sequence2', prefix: 'N'
@@ -53,7 +49,6 @@ describe Sqlserver::Sequence do
     end
 
     context 'with defaults' do
-
       before do
         Supplier.sequence :number
       end
@@ -69,20 +64,6 @@ describe Sqlserver::Sequence do
       end
 
       specify { expect(Supplier.sequences).to eq(expected) }
-    end
-  end
-
-  describe '#next_sequence_number' do
-
-    before do
-      Supplier.sequence :number
-    end
-
-    let!(:supplier) { Supplier.create }
-    let!(:other_supplier) { Supplier.create }
-
-    it 'returns the next value' do
-      expect(other_supplier.number).to be > supplier.number
     end
   end
 
