@@ -14,7 +14,7 @@
 mkmf.log
 .idea
 /bin
-
+.rspec
 .idea
 bin
 

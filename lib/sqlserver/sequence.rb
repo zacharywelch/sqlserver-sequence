@@ -1,15 +1,18 @@
 require 'active_support/concern'
+require 'sqlserver/sequence/configuration'
+require 'sqlserver/sequence//strategies'
 require 'sqlserver/sequence/version'
 
 module Sqlserver
   module Sequence
     extend ActiveSupport::Concern
 
-    class_methods do
+    module ClassMethods
       def sequence(field, options = {})
         unless defined?(sequences)
           include Sqlserver::Sequence::InstanceMethods
-    
+          include next_value_strategy
+
           class_attribute :sequences
           self.sequences = {}
     
@@ -19,16 +22,17 @@ module Sqlserver
         default_options = { name: field.to_s, format: nil, prefix: nil }
         self.sequences[field] = default_options.merge(options)
       end
+
+      private
+
+      def next_value_strategy
+        Sqlserver::Sequence.configuration.next_value_strategy || 
+          Strategies::NextValueFor
+      end
     end
 
     module InstanceMethods
       
-      def next_sequence_value(sequence_name)
-        self.class.connection.select_value(
-          "select next value for #{sequence_name}"
-        )
-      end
-
       private
 
       def set_sequences
