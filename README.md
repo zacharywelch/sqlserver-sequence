@@ -1,6 +1,6 @@
 # Sqlserver::Sequence
 
-[![Code Climate](https://codeclimate.com/github/zacharywelch/sqlserver-sequence/badges/gpa.svg)](https://codeclimate.com/github/zacharywelch/sqlserver-sequence)
+[![Build Status](https://travis-ci.org/zacharywelch/sqlserver-sequence.svg?branch=master)](https://travis-ci.org/zacharywelch/sqlserver-sequence)[![Code Climate](https://codeclimate.com/github/zacharywelch/sqlserver-sequence/badges/gpa.svg)](https://codeclimate.com/github/zacharywelch/sqlserver-sequence)
 [![Issue Count](https://codeclimate.com/github/zacharywelch/sqlserver-sequence/badges/issue_count.svg)](https://codeclimate.com/github/zacharywelch/sqlserver-sequence)
 [![Gem Version](https://badge.fury.io/rb/sqlserver-sequence.svg)](https://badge.fury.io/rb/sqlserver-sequence)
 
